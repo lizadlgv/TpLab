@@ -1,10 +1,8 @@
 package ru.ssau.tk.lizadlgv.tp_lab;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import ru.ssau.tk.lizadlgv.tp_lab.game.Game;
 import ru.ssau.tk.lizadlgv.tp_lab.game.GameException;
 
@@ -31,7 +29,7 @@ public class Controller {
     }
 
     @ResponseBody
-    @GetMapping(value = "/go")
+    @GetMapping(value = "/go", produces = MediaType.APPLICATION_JSON_VALUE)
     public Answer go(@RequestParam double angle, @RequestParam String token) {
         try {
             return Answer.ok(game.step(token, angle));
@@ -44,7 +42,7 @@ public class Controller {
     }
 
     @ResponseBody
-    @GetMapping(value = "/canGo")
+    @GetMapping(value = "/canGo", produces = MediaType.APPLICATION_JSON_VALUE)
     public Answer canGo(@RequestParam String token) {
         try {
             return Answer.ok(game.canStep(token));
@@ -57,13 +55,13 @@ public class Controller {
     }
 
     @ResponseBody
-    @GetMapping(value = "/validateToken")
+    @GetMapping(value = "/validateToken", produces = MediaType.APPLICATION_JSON_VALUE)
     public Answer validateToken(@RequestParam String token) {
         return Answer.ok(game.validateToken(token));
     }
 
     @ResponseBody
-    @GetMapping(value = "/getState")
+    @GetMapping(value = "/getState", produces = MediaType.APPLICATION_JSON_VALUE)
     public Answer getSate(@RequestParam String token) {
         try {
             return Answer.ok(game.getState(token));
